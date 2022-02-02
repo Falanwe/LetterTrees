@@ -26,6 +26,24 @@ namespace LetterTrees.Models
             return _children.TryGetValue(s[0], out var child) && child.ContainsString(s.Substring(1));
         }
 
+        /// <summary>
+        /// Changes the content of the tree to make sure the string s is present afterwards.
+        /// </summary>
+        /// <param name="s">The string to add to the tree if not already there</param>
+        public void AddIfNeeded(string s)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Lists all strings encoded in the tree
+        /// </summary>
+        /// <returns>The sequence of all strings encoded in the tree</returns>
+        public IEnumerable<string> ListStrings()
+        {
+            throw new NotImplementedException();
+        }
+
         public static NewLetterTree Encode(string s)
         {
             var root = new NewLetterTree();
@@ -38,7 +56,7 @@ namespace LetterTrees.Models
                 root.IsFinal = true;
             }
             return root;
-        }
+        }        
 
         public override string ToString() => $"{string.Join(',', _children)}";
     }
