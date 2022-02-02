@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LetterTrees.Models;
+using System;
 
 namespace LetterTrees
 {
@@ -6,7 +7,9 @@ namespace LetterTrees
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var tree =(LetterTree)"csharp";
+
+            Console.WriteLine(tree);
         }
     }
 }
