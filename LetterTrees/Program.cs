@@ -7,9 +7,10 @@ namespace LetterTrees
     {
         static void Main(string[] args)
         {
-            var tree =(LetterTree)"csharp";
+            var rootTree = NewLetterTree.Encode("csharp");
 
-            Console.WriteLine(tree);
+
+            Console.WriteLine(rootTree);
         }
     }
 }
