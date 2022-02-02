@@ -1,5 +1,7 @@
 ﻿using LetterTrees.Models;
 using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace LetterTrees
 {
@@ -7,27 +9,33 @@ namespace LetterTrees
     {
         static void Main(string[] args)
         {
+            var watch = new Stopwatch();
+            watch.Start();
+
             var rootTree = new NewLetterTree();
-
-            rootTree.AddIfNeeded("csharp");
-            rootTree.AddIfNeeded("cplusplus");
-            rootTree.AddIfNeeded("javascript");
-
-            rootTree.Feed("un chasseur sachant chasser doit savoir chasser sans son chien");
-
-            Console.WriteLine(rootTree.ContainsString("csharp"));
-            Console.WriteLine(rootTree.ContainsString("cplusplus"));            
-            Console.WriteLine(rootTree.ContainsString("java"));
-            Console.WriteLine(rootTree.ContainsString("javascript"));
-
-            Console.WriteLine(rootTree.Count());            
-
-            foreach(var s in rootTree.ListStrings())
+            using (var textReader = File.OpenText("comte_tome_1.txt"))
             {
-                Console.WriteLine(s);
+                for (var line = textReader.ReadLine(); line != null; line = textReader.ReadLine())
+                {
+                    rootTree.Feed(line);
+                }
             }
+            watch.Stop();
+            Console.WriteLine($"feeding took {watch.ElapsedMilliseconds} ms");
 
-                        
+            Console.WriteLine(rootTree.Count());
+            
+            while(true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please choose a prefix");
+                var search = Console.ReadLine();
+                Console.WriteLine("I found:");
+                foreach(var s in rootTree.Search(search))
+                {
+                    Console.WriteLine(s);
+                }
+            }
         }
     }
 }

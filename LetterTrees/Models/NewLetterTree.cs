@@ -99,6 +99,28 @@ namespace LetterTrees.Models
         /// <returns>The number of strings encoded by the tree</returns>
         public int Count() => (IsFinal ? 1 : 0) + Children.Values.Sum(child => child.Count());
 
+        public IEnumerable<string> Search(string prefix)
+        {
+            if(prefix == "")
+            {
+                foreach(var s in ListStrings())
+                {
+                    yield return s;
+                }
+            }
+            else if(_children.TryGetValue(prefix[0], out var child))
+            {
+                foreach(var s in child.Search(prefix.Substring(1)))
+                {
+                    yield return prefix[0] + s;
+                }
+            }
+            else
+            {
+                yield break;
+            }
+        }
+
         public static NewLetterTree Encode(string s)
         {
             var root = new NewLetterTree();
