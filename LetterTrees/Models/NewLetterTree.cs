@@ -14,12 +14,28 @@ namespace LetterTrees.Models
 
         public bool TryAddChild(char letter, NewLetterTree child) => _children.TryAdd(letter, child);
 
+        public bool IsFinal { get; private set; }
+
+        public bool ContainsString(string s)
+        {
+            if(s == "")
+            {
+                return IsFinal;
+            }
+
+            return _children.TryGetValue(s[0], out var child) && child.ContainsString(s.Substring(1));
+        }
+
         public static NewLetterTree Encode(string s)
         {
             var root = new NewLetterTree();
             if(s.Length>0)
             {
                 root.TryAddChild(s[0], Encode(s.Substring(1)));
+            }
+            else
+            {
+                root.IsFinal = true;
             }
             return root;
         }
